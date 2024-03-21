@@ -1,3 +1,4 @@
+import helpers.PropertiesReader;
 import helpers.TestConfig;
 import models.AuthenticationRequestModel;
 import okhttp3.Request;
@@ -12,7 +13,8 @@ public class LoginTest {
     public void loginPositive() throws IOException {
         // AuthenticationRequestModel класс представляет модель запроса аутентификации.
         AuthenticationRequestModel requestModel = AuthenticationRequestModel
-                .username("apple@gmail.com").password("Ap654322$"); // Создается экземпляр класса AuthenticationRequestModel с заданными данными пользователя для аутентификации (email и пароль).
+                .username(PropertiesReader.getProperty("existingUserEmail"))
+                .password(PropertiesReader.getProperty("existingUserPassword"));
         RequestBody requestBody = RequestBody
                 .create(TestConfig.gson.toJson(requestModel),
                         TestConfig.JSON); // Создается объект RequestBody, содержащий данные запроса в формате JSON.
