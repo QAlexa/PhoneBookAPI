@@ -24,10 +24,7 @@ public class LoginTest {
         Request request = new Request.Builder()
                 .url("https://contactapp-telran-backend.herokuapp.com/v1/user/login/usernamepassword")
                 .post(requestBody)
-                .build(); // Создается объект Request, представляющий HTTP POST-запрос к указанному URL с телом,
-        // содержащим данные аутентификации. Класс Request является частью библиотеки OkHttp,
-        // которая предоставляет удобный способ для работы с сетевыми запросами. в итоге у вас получается объект Request,
-        // который готов к отправке на сервер с заданными параметрами: методом POST, URL-адресом и телом запроса.
+                .build();
         Response response = TestConfig.client.newCall(request).execute(); // Выполняется HTTP-запрос с помощью объекта client из класса TestConfig, и возвращается объект Response т.е. какой-то ответ.
         System.out.println("Responce code : " + response.code());
 // если ответ содержит код 2** , то все прошло успешно.
@@ -37,7 +34,7 @@ public class LoginTest {
                     TestConfig.gson.fromJson(response.body().string(),
                             AuthenticationResponseModel.class);
 
-            PropertiesWriter.writeProperties("token ",responseModel.getToken(), false);
+            PropertiesWriter.writeProperties("token ",responseModel.getToken());//, false);
             System.out.println("Token : "+ responseModel.getToken());
             Assert.assertTrue(response.isSuccessful());
         }

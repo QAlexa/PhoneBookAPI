@@ -34,7 +34,7 @@ public class RegistrationTest {
                 TestConfig.gson.fromJson(response.body().string(),
                         AuthenticationResponseModel.class);
 
-        PropertiesWriter.writeProperties("token",responseModel.getToken(), false);
+        PropertiesWriter.writeProperties("token",responseModel.getToken()); //false);
         System.out.println("Token : "+ responseModel.getToken());
         Assert.assertTrue(response.isSuccessful());
     }
