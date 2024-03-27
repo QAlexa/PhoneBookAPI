@@ -1,9 +1,12 @@
 import helpers.PropertiesReader;
+import helpers.PropertiesWriter;
 import helpers.TestConfig;
 import models.AuthenticationRequestModel;
+import models.AuthenticationResponseModel;
 import okhttp3.Request;
 import okhttp3.RequestBody;
 import okhttp3.Response;
+import org.testng.Assert;
 import org.testng.annotations.Test;
 
 import java.io.IOException;
@@ -26,13 +29,17 @@ public class LoginTest {
         // которая предоставляет удобный способ для работы с сетевыми запросами. в итоге у вас получается объект Request,
         // который готов к отправке на сервер с заданными параметрами: методом POST, URL-адресом и телом запроса.
         Response response = TestConfig.client.newCall(request).execute(); // Выполняется HTTP-запрос с помощью объекта client из класса TestConfig, и возвращается объект Response т.е. какой-то ответ.
-
+        System.out.println("Responce code : " + response.code());
 // если ответ содержит код 2** , то все прошло успешно.
         if(response.isSuccessful()){
             // И теперь можно десериализовать в модель объекта с которым можно работать дальше. т.е. из объекта JSON получили объект класса AuthenticationRequestModel
-            AuthenticationRequestModel responseModel =
+            AuthenticationResponseModel responseModel =
                     TestConfig.gson.fromJson(response.body().string(),
-                            AuthenticationRequestModel.class);
+                            AuthenticationResponseModel.class);
+
+            PropertiesWriter.writeProperties("token ",responseModel.getToken(), false);
+            System.out.println("Token : "+ responseModel.getToken());
+            Assert.assertTrue(response.isSuccessful());
         }
         else {
             System.out.println("Error");

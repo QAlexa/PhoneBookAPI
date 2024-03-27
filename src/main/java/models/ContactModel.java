@@ -10,9 +10,22 @@ public class ContactModel {
  private String address;
  private String description;
 
-    public ContactModel(String id, String name, String lastName, String email
+    @Override
+    public String toString() {
+        return "ContactModel{" +
+                "id='" + id + '\'' +
+                ", name='" + name + '\'' +
+                ", lastName='" + lastName + '\'' +
+                ", email='" + email + '\'' +
+                ", phone='" + phone + '\'' +
+                ", address='" + address + '\'' +
+                ", description='" + description + '\'' +
+                '}';
+    }
+
+    public ContactModel(String name, String lastName, String email
             , String phone, String address, String description) {
-        this.id = id;
+       // this.id = id;
         this.name = name;
         this.lastName = lastName;
         this.email = email;
