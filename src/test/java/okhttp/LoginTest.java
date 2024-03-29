@@ -1,8 +1,12 @@
+package okhttp;
+
 import helpers.PropertiesReader;
 import helpers.PropertiesWriter;
 import helpers.TestConfig;
+import helpers.TestHelper;
 import models.AuthenticationRequestModel;
 import models.AuthenticationResponseModel;
+import models.ErrorModel;
 import okhttp3.Request;
 import okhttp3.RequestBody;
 import okhttp3.Response;
@@ -11,7 +15,7 @@ import org.testng.annotations.Test;
 
 import java.io.IOException;
 
-public class LoginTest {
+public class LoginTest implements TestHelper {
     @Test
     public void loginPositive() throws IOException {
         // AuthenticationRequestModel класс представляет модель запроса аутентификации.
@@ -38,8 +42,11 @@ public class LoginTest {
             System.out.println("Token : "+ responseModel.getToken());
             Assert.assertTrue(response.isSuccessful());
         }
-        else {
-            System.out.println("Error");
+        else { Assert.assertTrue(response.isSuccessful());
+            System.out.println("Status code : "+ response.code());
+            ErrorModel errorModel = gson.fromJson(response.body().string(), ErrorModel.class);
+            System.out.println("Error status: " + errorModel.getStatus());
+
         }
 
 

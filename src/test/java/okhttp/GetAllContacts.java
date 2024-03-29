@@ -1,5 +1,8 @@
+package okhttp;
+
 import helpers.PropertiesReader;
 import helpers.TestConfig;
+import helpers.TestHelper;
 import models.ContactListModel;
 import models.ContactModel;
 import okhttp3.Request;
@@ -9,14 +12,14 @@ import org.testng.annotations.Test;
 
 import java.io.IOException;
 
-public class GetAllContacts {
+public class GetAllContacts implements TestHelper {
 
     @Test
     public void getAllContactsPositive() throws IOException {
 
         Request request = new Request.Builder()
                 .url(PropertiesReader.getProperty("getAllContacts"))
-                .addHeader("Authorization",PropertiesReader.getProperty("token"))
+                .addHeader(AuthorizationHeader, PropertiesReader.getProperty("token"))
                 .build();
         Response response = TestConfig.client.newCall(request).execute();
 
